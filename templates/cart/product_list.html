@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-0">
+                <a href="{% url 'home' %}">Home</a>
+                <span class="mx-2 mb-0">/</span>
+                <strong>Shop</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-section">
+    <div class="container">       
+        <div class="row mb-5">
+                {% for product in object_list %}
+                    <div class="col-lg-4 col-md-6 mb-4"  data_aos="fade-up">
+                        <card class="block-4-image mb-6">
+                            <a href="{{ product.get_absolute_url}}"><img src="{{product.image.url}}" class="embed-responsive embed-responsive-16by9 img-fluid"></a>
+
+                        </card>
+                        <hr>
+                        <div class="block-4-text">
+                            <h2>{{product.name}}</h2>
+                            <p>{{ product.description }}</p>
+
+                        </div>
+                    
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

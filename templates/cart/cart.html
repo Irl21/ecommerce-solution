@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mb-0">
+                <a href="{% url 'home' %}">Home</a>
+                <span class="mx-2 mb-0">/</span>
+                <strong>Shop</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="site-section">
+    <div class="container">       
+        <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="site-blocks-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Image
+                                        </th>
+                                        <th>
+                                            Product
+                                        </th>
+                                        <th>
+                                            Price
+                                        </th>
+                                        <th>
+                                            Quantity
+                                        </th>
+                                        <th>
+                                            Total
+                                        </th>
+                                        <th>
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order.items.all %}
+                                    <tr>
+                                        <td class="product-thumbnail"><img src="{{ item.product.image.url }}" class="img-fluid"></td>
+                                        <td>
+                                            <h1 class="mb-3 text-black">{{ item.product.name }}</h1>
+                                            <small> Color: {{ item.color.name }}</small>
+                                            <small> Size: {{ item.size.name }}</small>
+                                        </td>
+                                        <td>
+                                            {{ item.product.get_price }}
+                                        </td>
+                                        <td>
+                                            <div class="input-group mb-3" style="max-width: 120px;">
+                                                <div class="'input-group-prepend">
+                                                    <a href="{% url 'cart:decrease-quantity' item.id%}" class="btn btn-outline-primary">
+                                                        &minus;
+                                                    </a>
+
+                                                </div>
+                                                <input type="text" class="form-control text-center" value="{{ item.quantity}}">
+                                                <div class="'input-group-append">
+                                                    <a href="{% url 'cart:increase-quantity' item.id%}" class="btn btn-outline-primary">
+                                                        &plus;
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{item.get_item_total}}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'cart:remove' item.id%}" class="btn btn-outline-primary btn-sm">X</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colSpan="6">
+                                            There are no items in your cart
+                                            <a href="{% url 'cart:product-list' %}">Continue Shopping</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <a type="submit" class="btn btn-outline-primary btn-sm btn-block">Continue shopping</a>
+            </div>
+            <div class="col-md-6 pl-6">
+                <div class="row justify-content-end">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 border-bottom mb-5  text-right">
+                                <h1 class="text-black text-uppercase">Cart Totals</h1>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">Subtotals</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong>{{ order.get_subtotal }}</strong>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">Total</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong>{{ order.get_subtotal }}</strong>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <a class="btn btn-primary btn-lg btn-block text-black" href="{% url 'cart:checkout' %}" >Proceed to checkout</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

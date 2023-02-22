@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+import os
 
 
 env =environ.Env()
@@ -18,12 +19,14 @@ SECRET_KEY = env('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = ENV('DEBUG')
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL=env('DEFAULT_FROM_EMAIL')
+NOTIFY_EMAIL=env('NOTIFY_EMAIL')
 
 
 # Application definition
@@ -35,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap4',
+    'core',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +115,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+CRISPY_TEMPLATE_PACK ='bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap4')
 
 
 # Static files (CSS, JavaScript, Images)
